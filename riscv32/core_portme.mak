@@ -78,7 +78,7 @@ LOAD = echo "Please set LOAD to the process of loading the executable to the fla
 RUN = echo "Please set LOAD to the process of running the executable (e.g. via jtag, or board reset)"
 
 OEXT = .o
-EXE = .bin
+EXE = .elf
 
 $(OPATH)$(PORT_DIR)/%$(OEXT) : %.c
 	$(CC) $(CFLAGS) $(XCFLAGS) $(COUT) $< $(OBJOUT) $@
@@ -86,8 +86,8 @@ $(OPATH)$(PORT_DIR)/%$(OEXT) : %.c
 $(OPATH)%$(OEXT) : %.c
 	$(CC) $(CFLAGS) $(XCFLAGS) $(COUT) $< $(OBJOUT) $@
 
-$(OPATH)$(RUNTIME_DIR)/%$(OEXT) : %.S
-	$(AS) $(ASFLAGS) $< $(OBJOUT) $@
+$(OPATH)start$(OEXT) : $(RUNTIME_DIR)/start.S
+	$(CC) $(ASFLAGS) $(COUT) $< $(OBJOUT) $@
 
 # Target : port_pre% and port_post%
 # For the purpose of this simple port, no pre or post steps needed.
@@ -97,5 +97,5 @@ port_pre% port_post% :
 
 # FLAG : OPATH
 # Path to the output folder. Default - current folder.
-OPATH := ./
+OPATH := ./ 
 MKDIR = mkdir -p
