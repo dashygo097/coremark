@@ -33,7 +33,7 @@ AS		= riscv64-unknown-elf-as
 #	Use this flag to define compiler options. Note, you can add compiler options from the command line using XCFLAGS="other flags"
 PORT_CFLAGS = \
 	-O2 \
-	-march=rv32im_zicsr \
+	-march=rv32i_zicsr \
 	-mabi=ilp32 \
 	-mcmodel=medany \
 	-ffreestanding \
@@ -44,6 +44,7 @@ PORT_CFLAGS = \
 	-DITERATIONS=$(ITERATIONS) \
 	-DEXECS=$(EXECS) \
 	-DTOTAL_DATA_SIZE=$(TOTAL_DATA_SIZE)
+LIBGCC_PATH := $(shell dirname $(shell $(CC) -march=rv32i_zicsr -mabi=ilp32 -print-libgcc-file-name))
 
 FLAGS_STR = "$(PORT_CFLAGS) $(XCFLAGS) $(XLFLAGS) $(LFLAGS_END)"
 CFLAGS = $(PORT_CFLAGS) -I$(PORT_DIR) -I. -DFLAGS_STR=\"$(FLAGS_STR)\" 
@@ -54,12 +55,12 @@ SEPARATE_COMPILE=1
 # Flag : SEPARATE_COMPILE
 # You must also define below how to create an object file, and how to link.
 OBJOUT 	= -o
-LFLAGS 	= -T $(RUNTIME_DIR)/linker.ld -m elf32lriscv
-ASFLAGS = -march=rv32im_zicsr -mabi=ilp32
+LFLAGS = -T $(RUNTIME_DIR)/linker.ld -m elf32lriscv -L$(LIBGCC_PATH)
+ASFLAGS = -march=rv32i_zicsr -mabi=ilp32
 OFLAG 	= -o
 COUT 	= -c
 
-LFLAGS_END = 
+LFLAGS_END = -lgcc
 # Flag : PORT_SRCS
 # 	Port specific source files can be added here
 #	You may also need cvt.c if the fcvt functions are not provided as intrinsics by your compiler!
