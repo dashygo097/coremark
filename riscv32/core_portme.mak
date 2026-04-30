@@ -34,7 +34,7 @@ AS		= riscv64-unknown-elf-as
 #	Use this flag to define compiler options. Note, you can add compiler options from the command line using XCFLAGS="other flags"
 PORT_CFLAGS = \
 	-O2 \
-	-march=rv32i_zicsr \
+	-march=rv32im_zicsr \
 	-mabi=ilp32 \
 	-mcmodel=medany \
 	-ffreestanding \
@@ -46,7 +46,7 @@ PORT_CFLAGS = \
 	-DEXECS=$(EXECS) \
 	-DTOTAL_DATA_SIZE=$(TOTAL_DATA_SIZE) \
   -DCORE_DEBUG=$(ENABLE_DEBUG)
-LIBGCC_PATH := $(shell dirname $(shell $(CC) -march=rv32i_zicsr -mabi=ilp32 -print-libgcc-file-name))
+LIBGCC_PATH := $(shell dirname $(shell $(CC) -march=rv32im_zicsr -mabi=ilp32 -print-libgcc-file-name))
 
 FLAGS_STR = "$(PORT_CFLAGS) $(XCFLAGS) $(XLFLAGS) $(LFLAGS_END)"
 CFLAGS = $(PORT_CFLAGS) -I$(PORT_DIR) -I. -DFLAGS_STR=\"$(FLAGS_STR)\" 
