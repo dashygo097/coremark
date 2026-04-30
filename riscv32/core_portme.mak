@@ -15,7 +15,8 @@
 # Original Author: Shay Gal-on
 
 #File : core_portme.mak
-RUNTIME_DIR ?=  
+RUNTIME_DIR ?= 
+ENABLE_DEBUG ?= 0
 
 # Flag : OUTFLAG
 #	Use this flag to define how to to get an executable (e.g -o)
@@ -43,7 +44,8 @@ PORT_CFLAGS = \
   -nostdlib \
 	-DITERATIONS=$(ITERATIONS) \
 	-DEXECS=$(EXECS) \
-	-DTOTAL_DATA_SIZE=$(TOTAL_DATA_SIZE)
+	-DTOTAL_DATA_SIZE=$(TOTAL_DATA_SIZE) \
+  -DCORE_DEBUG=$(ENABLE_DEBUG)
 LIBGCC_PATH := $(shell dirname $(shell $(CC) -march=rv32i_zicsr -mabi=ilp32 -print-libgcc-file-name))
 
 FLAGS_STR = "$(PORT_CFLAGS) $(XCFLAGS) $(XLFLAGS) $(LFLAGS_END)"
