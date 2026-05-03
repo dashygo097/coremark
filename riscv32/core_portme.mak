@@ -33,19 +33,36 @@ AS		= riscv64-unknown-elf-as
 # Flag : CFLAGS
 #	Use this flag to define compiler options. Note, you can add compiler options from the command line using XCFLAGS="other flags"
 PORT_CFLAGS = \
-	-O2 \
+	-O3 \
 	-march=rv32im_zicsr \
 	-mabi=ilp32 \
 	-mcmodel=medany \
 	-ffreestanding \
 	-fno-builtin \
 	-static \
-  -nostartfiles \
-  -nostdlib \
+	-nostartfiles \
+	-nostdlib \
+	-fomit-frame-pointer \
+	-fno-pic \
+	-fno-pie \
+	-fno-common \
+	-fno-tree-vectorize \
+	-finline-functions \
+	-finline-small-functions \
+	-fipa-sra \
+	-fweb \
+	-frename-registers \
+	-funroll-loops \
+	-fpeel-loops \
+	-funswitch-loops \
+	-fno-asynchronous-unwind-tables \
+	-fno-unwind-tables \
+	-ffunction-sections \
+	-fdata-sections \
 	-DITERATIONS=$(ITERATIONS) \
 	-DEXECS=$(EXECS) \
 	-DTOTAL_DATA_SIZE=$(TOTAL_DATA_SIZE) \
-  -DCORE_DEBUG=$(ENABLE_DEBUG)
+	-DCORE_DEBUG=$(ENABLE_DEBUG)
 LIBGCC_PATH := $(shell dirname $(shell $(CC) -march=rv32im_zicsr -mabi=ilp32 -print-libgcc-file-name))
 
 FLAGS_STR = "$(PORT_CFLAGS) $(XCFLAGS) $(XLFLAGS) $(LFLAGS_END)"
