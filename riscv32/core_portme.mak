@@ -15,7 +15,6 @@
 # Original Author: Shay Gal-on
 
 #File : core_portme.mak
-RUNTIME_DIR ?= 
 ENABLE_DEBUG ?= 0
 
 # Flag : OUTFLAG
@@ -75,7 +74,7 @@ SEPARATE_COMPILE=1
 # You must also define below how to create an object file, and how to link.
 OBJOUT 	= -o
 LFLAGS = -T $(RUNTIME_DIR)/linker.ld -m elf32lriscv -L$(LIBGCC_PATH)
-ASFLAGS = -march=rv32i_zicsr -mabi=ilp32
+ASFLAGS = -march=${ARCH}_zicsr -mabi=ilp32
 OFLAG 	= -o
 COUT 	= -c
 
